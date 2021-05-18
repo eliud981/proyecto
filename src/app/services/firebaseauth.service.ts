@@ -6,7 +6,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class FirebaseauthService {
 
-  constructor() { 
+  constructor(public auth: AngularFireAuth) { 
 
 
     this.getUid();
