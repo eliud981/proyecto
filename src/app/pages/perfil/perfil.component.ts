@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { Cliente } from 'src/app/models';
 import { FirebaseauthService } from 'src/app/services/firebaseauth.service';
 import { FirestorageService } from 'src/app/services/firestorage.service';
@@ -25,13 +26,27 @@ export class PerfilComponent implements OnInit {
 
   newFile: any;
 
+  uid = '';
+  suscriberUserInfo: Subscription;
+
+  ingresarEnable = false; 
   
   constructor(public menucontroler: MenuController,
               public firebaseauthService: FirebaseauthService,
-              public firestorageService:FirestorageService,
-              public firestoreService:FirestoreService ) { 
+              public firestoreService:FirestoreService,
+              public firestorageService:FirestorageService ) {
 
-        
+        this.firebaseauthService.stateAuth().subscribe(res => {
+
+          if(res !== null){
+            this.uid = res.uid;
+            this.getUserInfo(this.uid);
+          }else{
+            this.initCliente();
+          }
+      });
+}      
+
   async ngOnInit() {
 
     const uid = await this.firebaseauthService.getUid();
@@ -39,10 +54,23 @@ export class PerfilComponent implements OnInit {
 
   }
 
-  
-  openMenu(){
+  initCliente() {
+    this.uid = '';
+            this.cliente = {
+              uid: '',
+              email: '',
+              nombre:'',
+              celular: '',
+              foto: '',
+              referencia: '',
+              ubicacion: null,
+            };
+            console.log(this.cliente);
+  }
+
+  openMenu() {
     console.log('open menu');
-    this.menucontroler.toggle('principal')
+    this.menucontroler.toggle('principal');
   }
 
 
@@ -58,17 +86,18 @@ export class PerfilComponent implements OnInit {
     }
 }
 
-async registrarse(){
+async registrarse() {
   const credenciales = {
     email: this.cliente.email,
     password: this.cliente.celular,
-  }
+  };
   const res = await this.firebaseauthService.registrar(credenciales.email, credenciales.password).catch(err => {
     console.log('error=>', err);
   });
   const uid = await this.firebaseauthService.getUid();
   this.cliente.uid=uid;
-  this.guardarUser();
+  this.guardarUser;
+  console.log(uid);
 
 }
 
@@ -80,7 +109,7 @@ async guardarUser(){
     this.cliente.foto=res;
   }
   this.firestoreService.createDoc(this.cliente, path, this.cliente.uid).then(res=>{
-  console.log('guardado con exito');
+    console.log('guardado con exito');
   }).catch(error=>{
   });
 }
@@ -89,11 +118,13 @@ async salir(){
     //const uid = await this.firebaseauthService.getUid();
     //console.log(uid);
   this.firebaseauthService.logout();
+  this.suscriberUserInfo.unsubscribe();
 }
 
 getUserInfo(uid: string){
+  console.log('getUserInfo')
   const path = 'Clientes';
-  this.firestoreService.getDoc<Cliente>(path, uid).subscribe(res=> {
+  this.suscriberUserInfo = this.firestoreService.getDoc<Cliente>(path, uid).subscribe(res=> {
 
       this.cliente = res;
   });
@@ -109,6 +140,6 @@ ingresar(){
     console.log('Ingreso con exito');
 
   });
-}
+};
 
 }

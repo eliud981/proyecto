@@ -9,7 +9,7 @@ export interface Productos{
     fecha: Date;
 }
 
-export interface Cliente{
+export interface Cliente {
     uid: string;
     email: string;
     nombre: string;
@@ -20,4 +20,19 @@ export interface Cliente{
 }
 
 
+export interface Pedido{
+    uid: string;
+    cliente: Cliente;
+    productos: ProductoPedido [];
+    precioTotal: number;
+    estado: EstadoPedido;
+    fecha: Date;
+    valoracion: number;
+}
 
+export interface ProductoPedido{
+    producto: Productos;
+    cantidad: number;
+}
+
+export type EstadoPedido = 'enviado' | 'visto' | 'camino' | 'entregado';

@@ -27,7 +27,7 @@ export class FirebaseauthService {
   async getUid(){
 
     const user = await this.auth.currentUser;
-    if(user=== null){
+    if(user === null){
       return null;
     }else{
       return user.uid;
