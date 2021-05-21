@@ -12,6 +12,8 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 export class CarritoComponent implements OnInit {
 
   pedido: Pedido;
+  total: number;
+  cantidad: number;
 
   constructor(public menucontroler: MenuController,
     public firestoreService: FirestoreService,
@@ -29,13 +31,11 @@ this.menucontroler.toggle('principal')
 }
 
 loadPedido(){
-  this.carritoService.getCarrito().then( res => {
-    console.log(res);
-    if(res){
-       this.pedido = res;
-    }
-   
-  });
+ this.carritoService.getCarrito().subscribe( res => {
+   this.pedido= res;
+   this.getTotal;
+   this.getCantidad;
+ });
 }
 
 initCarrito(){
@@ -50,5 +50,18 @@ initCarrito(){
   };
 }
 
+getTotal(){
+  this.total=0;
+  this.pedido.productos.forEach( producto => {
+    this.total = (producto.producto.precioReducido) * producto.cantidad + this.total;
+  });
+}
+getCantidad(){
+  this.cantidad=0;
+  this.pedido.productos.forEach( producto => {
+    this.cantidad = producto.cantidad + this.cantidad;
+  });
+
+}
 
 }
