@@ -29,8 +29,8 @@ cliente: Cliente;
    }
 
   loadCarrito() {
-    const path = 'Clientes/' + this.uid + '/' + this.path;
-      this.firestoreService.getDoc<Pedido>(this.path, this.uid).subscribe(res => {
+    const path = 'Clientes/' + this.uid + '/' + 'carrito';
+      this.firestoreService.getDoc<Pedido>(path, this.uid).subscribe(res => {
         console.log(res);
           if(res){
             this.pedido = res;
@@ -66,7 +66,7 @@ cliente: Cliente;
   }
 
   addProducto(producto: Productos) {
-    /*if(this.uid.length){
+    if(this.uid.length){
         const item = this.pedido.productos.find( productoPedido => {
           return (productoPedido.producto.id === producto.id)
         });
@@ -81,29 +81,28 @@ cliente: Cliente;
         }
     }else{
       this.router.navigate(['/perfil']);
-      
-
-
-    }*/
-
-    const item = this.pedido.productos.find( productoPedido => {
-      return (productoPedido)
-    });
-
-    if(item !== undefined){
-       item.cantidad ++;
-     }else{
-        const add: ProductoPedido = {
-          cantidad: 1,
-          producto,
-        };
-       this.pedido.productos.push(add);
-      }
-
-
+      return;
+    }
     console.log('en add pedido -> ', this.pedido);
+
+    const path = 'Clientes/' + this.uid + '/' + this.path;
+
+    this.firestoreService.createDoc(this.pedido, path, this.uid).then( () => {
+        console.log('agregado con exito ');
+    } );
+
   }
  
+  removeProducto(producto: Productos){
 
- 
+  }
+
+  realizarPedido(){
+
+  }
+
+  clearCarrito(){
+
+  }
+
 }
