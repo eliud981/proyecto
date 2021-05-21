@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 //import { start } from 'repl';
 import { Cliente, Pedido, Productos, ProductoPedido } from '../models';
 import { FirebaseauthService } from './firebaseauth.service';
@@ -61,8 +62,33 @@ cliente: Cliente;
       });
   }
 
-  getCarrito(){
-      return this.pedido;
+  getCarrito(): Promise<Pedido> {
+    return new Promise(  resolve =>{
+
+      if(!this.uid.length){
+        resolve(null);
+        return;
+      }
+
+      if(this.pedido){
+        resolve(this.pedido);
+        return;
+      }else{
+        const path = 'Clientes/' + this.uid + '/' + 'carrito';
+        this.firestoreService.getDoc<Pedido>(path, this.uid).subscribe(res => {
+     
+            if(res){
+              resolve(res);
+              return;
+            }else{
+              resolve(null);
+              return;
+            }
+        });
+      }
+
+    });
+    
   }
 
   addProducto(producto: Productos) {

@@ -17,6 +17,7 @@ export class CarritoComponent implements OnInit {
     public firestoreService: FirestoreService,
     public carritoService: CarritoService) {
        
+      this.initCarrito();
       this.loadPedido();
 }
 
@@ -28,7 +29,26 @@ this.menucontroler.toggle('principal')
 }
 
 loadPedido(){
-  this.pedido = this.carritoService.getCarrito();
+  this.carritoService.getCarrito().then( res => {
+    console.log(res);
+    if(res){
+       this.pedido = res;
+    }
+   
+  });
 }
+
+initCarrito(){
+  this.pedido = {
+    uid: '',
+    cliente: null,
+    productos: [],
+    precioTotal: null,
+    estado: 'enviado',
+    fecha: new Date(),
+    valoracion: null,
+  };
+}
+
 
 }
