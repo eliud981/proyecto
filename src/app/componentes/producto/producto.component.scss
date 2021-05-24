@@ -1,0 +1,37 @@
+
+
+
+.img-producto {
+    width: 300px;
+    margin: auto;
+}
+
+.precio {
+    margin: 0px 20px 10px 0px;
+    text-align: right;
+    font-family: "Raleway", sans-serif;
+    font-size: 17px;
+    color: rgb(7, 5, 5);
+    font-weight: bold;
+}
+
+.tachado {
+    margin: 10px 20px 0px 0px;
+    text-align: right;
+    font-family: "Raleway", sans-serif;
+    font-size: 19px;
+    color: rgb(202, 24, 24);
+    text-decoration: line-through;
+}
+
+.icon-producto {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 25px;
+    margin: 10px;
+    background: black;
+    padding: 10px;
+    border-radius: 100%;
+    color: white;
+}

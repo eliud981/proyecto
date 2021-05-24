@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="subtitulo ion-text-wrap">
+     Mis pedidos
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="openMenu()">
+        <ion-icon color="primary" slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+      <ion-menu-buttom></ion-menu-buttom>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/perfil']">
+        <ion-icon color="primary" slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-menu-buttom></ion-menu-buttom>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+<div>
+  <ion-segment (ionChange)="changeSegment($event)" value="nuevos">
+    <ion-segment-button value="Nuevos">
+      <ion-label>Nuevos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Entregados">
+      <ion-label>Entregados</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+<ion-card *ngFor="let pedido of pedidos">
+  <ion-item>
+    <ion-label class="normal">
+      Estado: {{pedido.Estado}}
+      <p>
+        fecha: {{pedido.fecha.seconds | date}}
+      </p>
+    </ion-label>
+  </ion-item>
+ <app-itemcarrito *ngFor="let producto of pedido.productos" 
+ [productoPedido]="producto"></app-itemcarrito>
+</ion-card>
+
+
+</ion-content>
