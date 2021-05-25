@@ -31,7 +31,7 @@ cliente: Cliente;
    }
 //Esta funcion trae de la base de datos todos los productos que el usuario ingresó al carrito
   loadCarrito() {
-    const path = 'Clientes/' + this.uid + '/' + 'carrito';
+    const path = 'Cliente/' + this.uid + '/' + 'carrito';
       this.firestoreService.getDoc<Pedido>(path, this.uid).subscribe(res => {
         console.log(res);
           if(res){
@@ -58,7 +58,7 @@ cliente: Cliente;
 //Funcion para cargar la informacion de la base de datos asociada a el usuario ingresado
   loadCliente(){
     console.log('getUserInfo')
-      const path = 'Clientes';
+      const path = 'Cliente';
       this.firestoreService.getDoc<Cliente>(path, this.uid).subscribe(res=> {
     
           this.cliente = res;
@@ -100,7 +100,7 @@ cliente: Cliente;
     this.pedido$.next(this.pedido);
     console.log('en add pedido -> ', this.pedido);
 
-    const path = 'Clientes/' + this.uid + '/' + this.path;
+    const path = 'Cliente/' + this.uid + '/' + this.path;
     //se agregan los cambios a la base de datos
     this.firestoreService.createDoc(this.pedido, path, this.uid).then( () => {
         console.log('agregado con exito ');
@@ -125,7 +125,7 @@ cliente: Cliente;
           }
         console.log('en remove pedido -> ', this.pedido);
 
-        const path = 'Clientes/' + this.uid + '/' + this.path;
+        const path = 'Cliente/' + this.uid + '/' + this.path;
       
         this.firestoreService.createDoc(this.pedido, path, this.uid).then( () => {
             console.log('removido con exito ');
@@ -143,7 +143,7 @@ cliente: Cliente;
   //Funcion que limpia el carrito de compras una vez ya se presionó  el boton de pedir la compra
   //Se guardan cambios en la base de datos
   clearCarrito(){
-    const path  = 'Clientes/' + this.uid + '/' + 'carrito';
+    const path  = 'Cliente/' + this.uid + '/' + 'carrito';
     this.firestoreService.deleteDoc(path,this.uid).then ( ()=>{
         this.initCarrito();
     });

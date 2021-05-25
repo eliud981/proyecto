@@ -131,7 +131,7 @@ async salir(){
 //Esta funcion obtiene los datos del usuario anteriormente registrados de la base de datos
 getUserInfo(uid: string){
   console.log('getUserInfo')
-  const path = 'Clientes';
+  const path = 'Cliente';
   this.suscriberUserInfo = this.firestoreService.getDoc<Cliente>(path, uid).subscribe(res=> {
 
       this.cliente = res;
