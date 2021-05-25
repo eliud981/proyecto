@@ -26,12 +26,13 @@ export class CarritoComponent implements OnInit {
 }
 
 ngOnInit() {}
-
+//funcion para abrir el menú lateral
 openMenu(){
 console.log('open menu');
 this.menucontroler.toggle('principal')
 }
 
+//Nos suscribimos a todos los posibles cambios, asi podemos seguir agregando productos de la tienda al carrito
 loadPedido(){
  this.carritoService.getCarrito().subscribe( res => {
    this.pedido= res;
@@ -39,7 +40,8 @@ loadPedido(){
    this.getCantidad;
  });
 }
-
+ 
+//Se inicializa carrito
 initCarrito(){
   this.pedido = {
     uid: '',
@@ -51,6 +53,7 @@ initCarrito(){
     valoracion: null,
   };
 }
+
 
 getTotal(){
   this.total=0;
@@ -66,6 +69,8 @@ getCantidad(){
 
 }
 
+//Funcion para realizar pedido desde el carrito de compras
+//La informacion del pedido junto con el id del cliente se mandan a la base de datos
 async pedir(){
   if (this.pedido.productos.length){
     console.log('Añade items');

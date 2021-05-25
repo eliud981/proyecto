@@ -33,13 +33,14 @@ export class MispedidosComponent implements OnInit, OnDestroy {
       this.entregadosSuscriber.unsubscribe();
     }
   }
-
+//abrir menú lateral
   openMenu(){
     console.log('open menu');
     this.menucontroler.toggle('principal')
     }
 
-
+//Esta funcion se encarga de redirigirte a los distintos pedidos mediante la deteccion de un evento
+//el cual sucede al seleccionar una de las opciones en el apartado de pedidos
     changeSegment(ev: any){
       //console.log('changeSegment(), ev.detail.value');
       const opc = ev.detail.value;
@@ -50,7 +51,7 @@ export class MispedidosComponent implements OnInit, OnDestroy {
         this.getPedidosNuevos
       }
     }
-
+//Esta funcion se encarga de traer todos los pedidos con el estado "enviado" de la base de datos
     async getPedidosNuevos(){
       console.log('getPedidosNuevos()');
       const uid = await this.firebaseauthService.getUid();
@@ -63,7 +64,7 @@ export class MispedidosComponent implements OnInit, OnDestroy {
       });
     }
     
-
+//Al igual que la anterior, esta funcion manda a llamar los datos de los pedidos con el estado entregado
   async getPedidosEntregdos(){
       console.log('getPedidosEntregados()');
       const uid = await this.firebaseauthService.getUid();

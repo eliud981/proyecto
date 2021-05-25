@@ -31,6 +31,10 @@ export class PerfilComponent implements OnInit {
 
   ingresarEnable = false; 
   
+  //En caso de existir se obtiene la informacion ingresada anteriormente por el usuario, esto por un observador que nos proporciona la id; 
+  //con esta id se manda a llamar una funcion que busca los datos en firebase.
+  //En el caso que no exista ningun usuario logueado simplemente se manda a inicializar los datos
+
   constructor(public menucontroler: MenuController,
               public firebaseauthService: FirebaseauthService,
               public firestoreService:FirestoreService,
@@ -54,6 +58,7 @@ export class PerfilComponent implements OnInit {
 
   }
 
+  //Se inicializan los datos de cliente
   initCliente() {
     this.uid = '';
             this.cliente = {
@@ -73,7 +78,7 @@ export class PerfilComponent implements OnInit {
     this.menucontroler.toggle('principal');
   }
 
-
+//Funcion para agregar imagen al perfil
   async newImageupload(event:any){
     if(event.target.files && event.target.files[0]){
       this.newFile = event.target.files[0];
@@ -85,7 +90,7 @@ export class PerfilComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
 }
-
+//En esta funcion se leen los datos de email y celular para crear una cuenta que con la autenticacion de firebase nos va generar una id
 async registrarse() {
   const credenciales = {
     email: this.cliente.email,
@@ -101,6 +106,8 @@ async registrarse() {
 
 }
 
+//funcion para guardar los datos ingresados por el usuario en el apartado de perfil al registrarse
+//en caso de que se haya agregado una foto de perfil, esta se guarda primero, sino simplemente se mandan el resto de datos a firebase
 async guardarUser(){
   const path ='Cliente';
   const name = this.cliente.nombre;
@@ -121,6 +128,7 @@ async salir(){
   this.suscriberUserInfo.unsubscribe();
 }
 
+//Esta funcion obtiene los datos del usuario anteriormente registrados de la base de datos
 getUserInfo(uid: string){
   console.log('getUserInfo')
   const path = 'Clientes';
@@ -129,7 +137,7 @@ getUserInfo(uid: string){
       this.cliente = res;
   });
 }
-
+//Inicio de sesion con la autenticacion de firebase
 async ingresar(){
   const credenciales ={
     email: this.cliente.email,

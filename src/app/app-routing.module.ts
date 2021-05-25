@@ -6,7 +6,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MispedidosComponent } from './pages/mispedidos/mispedidos.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 
-
+//Se asignan los nombres de las rutas que llevarán a cada componente
 
 const routes: Routes = [
   {path: 'home',component: HomeComponent},

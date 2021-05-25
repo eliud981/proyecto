@@ -6,8 +6,12 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class FirebaseauthService {
 
-  constructor(public auth: AngularFireAuth) { 
+  //  Autenticacion con firebase
 
+
+  //Nada mas al abrir la aplicacion se manda a llamar la funcion para conseguir el id del usuario
+  //Esto para en caso de haberse registrado ya no perderá sus datos incluso al refrescar la pag
+  constructor(public auth: AngularFireAuth) { 
 
     this.getUid();
   }
@@ -24,6 +28,8 @@ export class FirebaseauthService {
    return this.auth.createUserWithEmailAndPassword(email, password);
   }
 
+  //En caso de existir, esta funcion regresa el id creada con firebase del usuario actual.
+  //Esta va a utilizarse como identificador para el resto de datos del usuario, tales como productos en el carrito, pedidos, entre otros
   async getUid(){
 
     const user = await this.auth.currentUser;
@@ -33,7 +39,7 @@ export class FirebaseauthService {
       return user.uid;
     }
   }
-
+  //observable que registra todos lo que pasa con el estado de autenticacion del usuario
   stateAuth(){
    return this.auth.authState;
   }

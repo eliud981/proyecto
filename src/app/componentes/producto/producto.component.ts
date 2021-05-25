@@ -18,7 +18,7 @@ export class ProductoComponent implements OnInit {
     //console.log('el producto es -> ', this.producto);
 
   }
-
+//Al precionar el boton de agregar producto que se encuentra en cada item de la tienda se manda a llamar la funcion de addProducto
   addCarrito(){
         this.carritoService.addProducto(this.producto);
   }

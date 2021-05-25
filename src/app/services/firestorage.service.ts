@@ -9,7 +9,7 @@ export class FirestorageService {
 
   constructor(public storage: AngularFireStorage) { }
 
-
+//funcion que se encarga de subir el archivo de la imagen guardada a la base de datos
   uploadImage(file: any, path: string, nombre: string): Promise<string>{
     return new Promise(  resolve =>{
 

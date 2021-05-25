@@ -15,6 +15,8 @@ export class ItemCarritoComponent implements OnInit {
 
   ngOnInit() {}
 
+  //funciones para los botones de añadir o quitar una unidad desde el apartado de carrito
+  
   addCarrito(){
     this.carritoService.addProducto(this.productoPedido.producto);
 }

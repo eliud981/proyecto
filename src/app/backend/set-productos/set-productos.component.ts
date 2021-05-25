@@ -36,12 +36,14 @@ export class SetProductosComponent implements OnInit {
   ngOnInit() {
     this.getProductos();
   }
-
+//abrir menú lateral
   openMenu(){
     console.log('open menu');
     this.menucontroler.toggle('principal')
   }
 
+  //funcion que manda la informacion registrada de un producto a la base de datos 
+  //y mientras se realiza el poceso manda a llamar la funcion para mostrar una ventana emergente 
   async guardarProducto(){
     this.presentLoading();
 
@@ -57,6 +59,7 @@ export class SetProductosComponent implements OnInit {
     });
   }
 
+  //funcion que lee todos los productos refgistrados en la base de datos
   getProductos(){
     this.firestoreService.getCollection<Productos>(this.path).subscribe( res=>{
 
@@ -64,7 +67,7 @@ export class SetProductosComponent implements OnInit {
 
     });
   }
-
+//Funcion que muestra una ventana emergente preguntando si esta seguro de eliminar el producto seleccionado
   async deleteProducto(producto: Productos){
       const alert = await this.alertController.create({
         cssClass: 'nomral',
@@ -96,7 +99,7 @@ export class SetProductosComponent implements OnInit {
       });
       await alert.present();
   }
-
+//Funcion para agregar un producto nuevo a la base de datos
   nuevo(){
     this.enableNewProducto=true;
     this.newProducto = {
@@ -108,7 +111,7 @@ export class SetProductosComponent implements OnInit {
       fecha: new Date()
     };
   }
-
+//Funcion que muestra una ventana emergente con la leyenda de ""guardando"
   async presentLoading() {
     this.loading = await this.loadingController.create({
       cssClass: 'normal',
@@ -128,7 +131,7 @@ export class SetProductosComponent implements OnInit {
     });
     toast.present();
   }
-
+//Funcion para poder mostrar y guardar una imagen de referencia a cada producto
   async newImageupload(event:any){
     if(event.target.files && event.target.files[0]){
       this.newFile = event.target.files[0];
