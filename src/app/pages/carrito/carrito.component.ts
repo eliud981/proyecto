@@ -64,4 +64,30 @@ getCantidad(){
 
 }
 
+<<<<<<< Updated upstream
+=======
+//Funcion para realizar pedido desde el carrito de compras
+//La informacion del pedido junto con el id del cliente se mandan a la base de datos
+async pedir(){
+  if (this.pedido.productos.length){
+    console.log('Añade items');
+    return;
+  }
+this.pedido.fecha = new Date();
+this.pedido.precioTotal = this.total;
+this.pedido.uid =this.firestoreService.getId();
+const uid = await this.firebaseauthService.getUid();
+console.log('pedir()->', this.pedido, uid);
+const path = 'Cliente/' +uid+ 'pedidos/'
+this.carritoService.addSong(this.pedido.uid,this.pedido.cliente,this.pedido.productos,this.pedido.precioTotal,this.pedido.predioReducido);
+this.firestoreService.createDoc(this.pedido, path, this.pedido.uid).then( ()=>{
+  console.log('Guardado con exito');
+  this.carritoService.clearCarrito();
+  this.carritoService.deleteSong(this.pedido.uid);
+  
+});
+
+}
+
+>>>>>>> Stashed changes
 }

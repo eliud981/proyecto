@@ -14,6 +14,10 @@ const routes: Routes = [
   {path: 'perfil',component: PerfilComponent},
   {path: '',component: HomeComponent},
   {path: '**',redirectTo: 'home',pathMatch: 'full'},
+  {
+    path: 'product/:id',
+    loadChildren: () => import('./pages/details/details.module').then( m => m.DetailsPageModule)
+  },
  
 ];
 

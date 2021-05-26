@@ -23,8 +23,9 @@ export interface Cliente {
 export interface Pedido{
     uid: string;
     cliente: Cliente;
-    productos: ProductoPedido [];
+    productos: ProductoPedido ;
     precioTotal: number;
+    predioReducido:number;
     estado: EstadoPedido;
     fecha: Date;
     valoracion: number;
